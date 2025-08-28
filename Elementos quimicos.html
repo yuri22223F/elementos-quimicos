@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Elementos — Guia Rápido</title>
+    <meta name="description" content="Explore, pesquise e aprenda sobre os elementos químicos de forma interativa.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* styles.css */
+
+        /* 1. Reset e Variáveis Globais
+        -------------------------------------------------- */
+
+        :root {
+            /* Paleta de Cores - Tema Claro */
+            --color-background: #f0f2f5; /* Light gray background */
+            --color-surface: #ffffff; /* White cards and panels */
+            --color-text-primary: #2c3e50; /* Darker text */
+            --color-text-secondary: #7f8c8d; /* Muted text */
+            --color-accent: #3498db; /* Primary blue */
+            --color-accent-hover: #2980b9; /* Darker blue on hover */
+            --color-border: #e0e6ed; /* Light border */
+            --color-card-border: #dcdfe4; /* Slightly darker card border */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+            --shadow-md: 0 6px 12px rgba(0,0,0,0.12);
+
+            /* Gradiente para o cabeçalho no tema claro */
+            --header-gradient: linear-gradient(135deg, #eaf2f8, #d4e6f1); 
+
+            /* Tipografia */
+            --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            --font-size-base: 16px;
+            --line-height-base: 1.6;
+
+            /* Layout */
+            --container-width: 1200px; /* Slightly wider container */
+            --spacing-unit: 1rem;
+        }
+
+        /* Modo Escuro - ativado pela preferência do sistema */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background: #1a1a2e; /* Darker background */
+                --color-surface: #1e2749; /* Darker cards and panels */
+                --color-text-primary: #e0e0e0; /* Light text */
+                --color-text-secondary: #a0a0a0; /* Muted light text */
+                --color-accent: #6dd5ed; /* Lighter blue/cyan */
+                --color-accent-hover: #2193b0; /* Darker cyan on hover */
+                --color-border: #3b3b5c; /* Dark border */
+                --color-card-border: #4a4a75; /* Slightly darker card border */
+                --shadow-sm: 0 2px 5px rgba(0,0,0,0.3);
+                --shadow-md: 0 8px 16px rgba(0,0,0,0.4);
+
+                /* Gradiente para o cabeçalho no tema escuro */
+                --header-gradient: linear-gradient(135deg, #161a33, #12162a); 
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 calc(var(--spacing-unit) * 1.5);
+        }
+
+        main {
+            flex-grow: 1;
+            padding-top: calc(var(--spacing-unit) * 2.5);
+            padding-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        /* Classe para leitores de tela */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* 2. Cabeçalho e Rodapé
+        -------------------------------------------------- */
+        .site-header {
+            background: var(--header-gradient); /* Usando o gradiente */
+            padding: calc(var(--spacing-unit) * 3) 0;
+            border-bottom: 1px solid var(--color-border);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .site-header h1 {
+            font-size: 3rem; /* Maior e mais impactante */
+            font-weight: 900;
+            margin-bottom: calc(var(--spacing-unit) * 0.75);
+            color: var(--color-text-primary);
+            letter-spacing: -0.03em; /* Ajuste para melhor legibilidade */
+        }
+
+        .site-header p {
+            color: var(--color-text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .site-footer {
+            background-color: var(--color-surface);
+            padding: calc(var(--spacing-unit) * 1.5) 0;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .site-footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .site-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 3. Controles (Busca, Filtro, Ordenação)
+        -------------------------------------------------- */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--spacing-unit) * 2);
+            align-items: flex-end;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            padding: calc(var(--spacing-unit) * 1.5);
+            background-color: var(--color-surface);
+            border-radius: 12px; /* Bordas mais arredondadas */
+            box-shadow: var(--shadow-md); /* Sombra mais proeminente */
+            margin-top: calc(var(--spacing-unit) * 2); /* Espaço do header */
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-width: 180px; /* Garante que não fiquem muito pequenos */
+        }
+
+        .control-group label, .control-group legend {
+            font-weight: 600; /* Mais destaque */
+            margin-bottom: calc(var(--spacing-unit) * 0.75);
+            font-size: 0.95rem;
+            color: var(--color-text-primary);
+        }
+
+        .control-group input[type="search"],
+        .control-group select {
+            width: 100%;
+            padding: 0.85rem; /* Um pouco mais de padding */
+            border: 1px solid var(--color-border);
+            border-radius: 8px; /* Mais arredondado */
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+
+        .control-group input[type="search"]::placeholder {
+            color: var(--color-text-secondary);
+            opacity: 0.7;
+        }
+
+        .control-group input[type="search"]:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 30%, transparent); /* Sombra de foco mais visível */
+            background-color: var(--color-surface); /* Fundo branco ao focar */
+        }
+
+        .radio-group {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 0.8);
+            flex-wrap: wrap;
+        }
+
+        .radio-group input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            padding: 0.7rem 1.3rem; /* Mais padding */
+            border: 1px solid var(--color-border);
+            border-radius: 25px; /* Pill shape */
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--color-text-primary);
+            background-color: var(--color-background);
+        }
+
+        .radio-group input[type="radio"]:checked + label {
+            background-color: var(--color-accent);
+            color: white;
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .radio-group label:hover:not(.radio-group input[type="radio"]:checked + label) {
+            background-color: var(--color-border); /* Um leve hover */
+        }
+
+        .radio-group input[type="radio"]:focus-visible + label {
+            outline: 3px solid var(--color-accent); /* Outline mais robusto */
+            outline-offset: 3px;
+        }
+
+        /* 4. Grid de Elementos e Cards
+        -------------------------------------------------- */
+        #elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Cards um pouco maiores */
+            gap: calc(var(--spacing-unit) * 2); /* Mais espaçamento entre cards */
+        }
+
+        .element-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px; /* Bordas mais suaves */
+            padding: calc(var(--spacing-unit) * 1.5);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden; /* Para o efeito de brilho */
+        }
+
+        .element-card::before { /* Efeito de brilho */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0, var(--color-accent), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .element-card:hover {
+            transform: translateY(-8px); /* Mais elevação */
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent); /* Borda destaca ao hover */
+        }
+
+        .element-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .element-card div { /* Para z-index do conteúdo */
+            position: relative;
+            z-index: 1;
+        }
+
+        .element-card .symbol {
+            font-size: 3.8rem; /* Símbolo maior */
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-accent); /* Cor de destaque */
+            margin-bottom: calc(var(--spacing-unit) * 0.2);
+        }
+
+        .element-card .name {
+            font-size: 1.4rem; /* Nome maior */
+            font-weight: 700;
+            margin-top: calc(var(--spacing-unit) * 0.5);
+            color: var(--color-text-primary);
+        }
+
+        .element-card .atomic-info {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin-bottom: calc(var(--spacing-unit) * 1.2);
+            line-height: 1.4;
+        }
+
+        .element-card .details-button {
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            font-weight: 600; /* Mais negrito */
+            cursor: pointer;
+            width: 100%;
+            margin-top: var(--spacing-unit);
+            transition: background-color 0.2s, transform 0.1s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* Sombra no botão */
+            position: relative;
+            z-index: 1;
+        }
+
+        .element-card .details-button:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .element-card .details-button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .element-card .details-button:focus-visible {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 3px;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 1.3rem; /* Mensagem maior */
+            color: var(--color-text-secondary);
+            padding: calc(var(--spacing-unit) * 4) 0;
+            font-weight: 500;
+        }
+
+        /* 5. Modal de Detalhes
+        -------------------------------------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo mais escuro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-unit);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay:not([hidden]) {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: var(--color-surface);
+            border-radius: 16px; /* Mais arredondado */
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 650px; /* Um pouco mais largo */
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(20px) scale(0.98); /* Animação de entrada */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .modal-overlay:not([hidden]) .modal-container {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .modal-container, .modal-overlay, .element-card, .element-card::before {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Alinha ao centro verticalmente */
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2); /* Mais padding */
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            background: var(--color-surface);
+            z-index: 10; /* Garante que fique acima do conteúdo do modal */
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        .modal-header .header-info {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1);
+        }
+
+        .modal-symbol {
+            font-size: 5rem; /* Símbolo bem grande */
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-accent);
+        }
+
+        #modal-title {
+            font-size: 2.2rem; /* Título maior */
+            font-weight: 800;
+            margin: 0;
+            color: var(--color-text-primary);
+        }
+
+        .modal-header p {
+            color: var(--color-text-secondary);
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 2.5rem; /* Botão de fechar maior */
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            line-height: 1;
+            padding: 0.25rem;
+            transition: color 0.2s, transform 0.1s ease;
+        }
+        .close-button:hover {
+            color: var(--color-accent);
+            transform: scale(1.1);
+        }
+        .close-button:focus-visible {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .modal-body {
+            padding: calc(var(--spacing-unit) * 2);
+            color: var(--color-text-primary);
+        }
+
+        .modal-body h3 {
+            font-size: 1.4rem; /* Títulos de seção maiores */
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            border-bottom: 3px solid var(--color-accent); /* Borda mais grossa */
+            padding-bottom: 0.6rem;
+            display: inline-block;
+            color: var(--color-text-primary);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .modal-body section:not(:last-child) {
+            margin-bottom: calc(var(--spacing-unit) * 2.5);
+        }
+
+        .modal-body ul {
+            list-style-type: '👉 '; /* Ícone divertido */
+            list-style-position: outside;
+            padding-left: calc(var(--spacing-unit) * 1.5);
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .modal-body li {
+            margin-bottom: calc(var(--spacing-unit) * 0.7);
+            padding-left: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .modal-body p {
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .modal-body strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        .modal-footer {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+            border-top: 1px solid var(--color-border);
+            text-align: right;
+            background: var(--color-surface);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+        .print-button {
+            background-color: var(--color-text-secondary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.8rem; /* Mais padding */
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .print-button:hover {
+            background-color: color-mix(in srgb, var(--color-text-secondary) 80%, black);
+            transform: translateY(-2px);
+        }
+        .print-button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .print-button:focus-visible {
+            outline: 3px solid var(--color-text-secondary);
+            outline-offset: 3px;
+        }
+
+
+        /* 6. Responsividade
+        -------------------------------------------------- */
+        @media (max-width: 992px) {
+            .site-header h1 {
+                font-size: 2.5rem;
+            }
+            .site-header p {
+                font-size: 1.1rem;
+            }
+            .controls {
+                gap: var(--spacing-unit);
+            }
+            .control-group {
+                min-width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                padding: var(--spacing-unit);
+            }
+            .site-header h1 {
+                font-size: 2rem;
+            }
+            .site-header p {
+                font-size: 1rem;
+            }
+            #elements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Cards menores em telas pequenas */
+                gap: calc(var(--spacing-unit) * 1.5);
+            }
+            .element-card .symbol {
+                font-size: 3rem;
+            }
+            .element-card .name {
+                font-size: 1.1rem;
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: calc(var(--spacing-unit) * 1);
+            }
+            .modal-header .header-info {
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.5rem;
+                margin-bottom: var(--spacing-unit);
+            }
+            .modal-symbol {
+                font-size: 4rem;
+            }
+            #modal-title {
+                font-size: 1.8rem;
+            }
+            .modal-header p {
+                font-size: 0.9rem;
+            }
+            .close-button {
+                position: absolute; /* Para posicionar no canto superior direito */
+                top: 10px;
+                right: 10px;
+                font-size: 2rem;
+            }
+            .modal-body {
+                padding: calc(var(--spacing-unit) * 1.5);
+            }
+            .modal-body h3 {
+                font-size: 1.2rem;
+            }
+            .modal-body ul {
+                padding-left: var(--spacing-unit);
+            }
+            .print-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 var(--spacing-unit);
+            }
+            .site-header h1 {
+                font-size: 1.8rem;
+            }
+            .site-header p {
+                font-size: 0.9rem;
+            }
+            #elements-grid {
+                grid-template-columns: 1fr; /* Um card por linha em telas muito pequenas */
+            }
+            .modal-symbol {
+                font-size: 3rem;
+            }
+            #modal-title {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        /* 7. Estilos de Impressão
+        -------------------------------------------------- */
+        @media print {
+            body > *:not(.modal-overlay) {
+                display: none;
+            }
+
+            .modal-overlay {
+                position: static;
+                background-color: transparent;
+                padding: 0;
+                display: block;
+            }
+
+            .modal-container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                max-width: 100%;
+                max-height: none;
+                overflow: visible;
+                transform: none;
+                opacity: 1;
+                border-radius: 0;
+            }
+
+            .modal-footer, .close-button {
+                display: none;
+            }
+
+            .modal-header, .modal-body {
+                padding: 1rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .modal-header {
+                border-radius: 0;
+            }
+
+            .modal-header .header-info {
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 0;
+            }
+
+            .modal-symbol {
+                font-size: 3rem;
+                color: #2c3e50; /* Força cor escura para impressão */
+            }
+            #modal-title {
+                font-size: 1.5rem;
+                color: #2c3e50;
+            }
+            .modal-header p {
+                color: #555;
+            }
+
+            .modal-body h3 {
+                border-bottom-color: #aaa;
+                color: #2c3e50;
+            }
+
+            .modal-body ul {
+                list-style-type: disc; /* Volta ao padrão para impressão */
+                padding-left: 20px;
+            }
+
+            .modal-body li {
+                list-style-position: outside;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <h1>Tabela de Elementos — Guia Rápido</h1>
+            <p>Explore, pesquise e aprenda sobre os elementos químicos essenciais de forma interativa e detalhada.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="controls" aria-labelledby="controls-heading">
+            <h2 id="controls-heading" class="sr-only">Controles de Visualização</h2>
+            
+            <div class="control-group">
+                <label for="search-input">Buscar Elemento</label>
+                <input type="search" id="search-input" placeholder="Nome, símbolo ou nº atômico..." aria-label="Buscar elemento por nome, símbolo ou número atômico">
+            </div>
+
+            <fieldset class="control-group">
+                <legend>Filtrar por Tipo</legend>
+                <div class="radio-group">
+                    <input type="radio" id="filter-all" name="type-filter" value="todos" checked>
+                    <label for="filter-all">Todos</label>
+                    <input type="radio" id="filter-metal" name="type-filter" value="metal">
+                    <label for="filter-metal">Metais</label>
+                    <input type="radio" id="filter-nao-metal" name="type-filter" value="nao-metal">
+                    <label for="filter-nao-metal">Não-metais</label>
+                    <input type="radio" id="filter-semimetal" name="type-filter" value="semimetal">
+                    <label for="filter-semimetal">Semimetais</label>
+                </div>
+            </fieldset>
+
+            <div class="control-group">
+                <label for="sort-select">Ordenar por</label>
+                <select id="sort-select" aria-label="Critério de ordenação dos elementos">
+                    <option value="atomicNumber">Número Atômico</option>
+                    <option value="name">Nome (A-Z)</option>
+                    <option value="atomicMass">Massa Atômica</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="elements-grid" aria-live="polite" aria-atomic="true">
+            </section>
+        <p id="no-results" class="no-results" hidden>Nenhum elemento encontrado. Tente ajustar os filtros ou a busca.</p>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 - Tabela de Elementos. Criado com <span aria-label="coração" role="img">💙</span>.</p>
+            <p><a href="#" target="_blank" rel="noopener noreferrer">Código Fonte no GitHub</a></p>
+        </div>
+    </footer>
+
+    <div id="element-modal" class="modal-overlay" hidden>
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <header class="modal-header">
+                <div class="header-info">
+                    <span class="modal-symbol" data-modal="symbol"></span>
+                    <div>
+                        <h2 id="modal-title" data-modal="name"></h2>
+                        <p>Número Atômico: <span data-modal="atomicNumber"></span></p>
+                    </div>
+                </div>
+                <button class="close-button" aria-label="Fechar modal">&times;</button>
+            </header>
+            
+            <div class="modal-body">
+                <section>
+                    <h3>Visão Rápida</h3>
+                    <ul>
+                        <li><strong>Categoria:</strong> <span data-modal="category"></span></li>
+                        <li><strong>Estado (25°C):</strong> <span data-modal="state"></span></li>
+                        <li><strong>Massa Atômica:</strong> <span data-modal="atomicMass"></span> u</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Principais Usos</h3>
+                    <ul data-modal="uses"></ul>
+                </section>
+                <section>
+                    <h3>Curiosidade</h3>
+                    <p data-modal="curiosity"></p>
+                </section>
+            </div>
+
+            <footer class="modal-footer">
+                <button class="print-button">Exportar para PDF</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // script.js
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Dados dos 10 elementos solicitados
+            const elementos = [
+                {
+                    atomicNumber: 22,
+                    symbol: 'Ti',
+                    name: 'Titânio',
+                    atomicMass: 47.87,
+                    category: 'Metal de Transição',
+                    type: 'metal', // Simplificado para filtro
+                    state: 'Sólido',
+                    uses: [
+                        'Ligas leves e resistentes em aeronáutica e foguetes.',
+                        'Implantes médicos e pinos cirúrgicos devido à sua biocompatibilidade.'
+                    ],
+                    curiosity: 'É extremamente resistente à corrosão, quase tanto quanto a platina.'
+                },
+                {
+                    atomicNumber: 6,
+                    symbol: 'C',
+                    name: 'Carbono',
+                    atomicMass: 12.01,
+                    category: 'Não-metal',
+                    type: 'nao-metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Grafite em lápis e lubrificantes.',
+                        'Diamante em joias e ferramentas de corte industrial.'
+                    ],
+                    curiosity: 'É a base de toda a vida orgânica na Terra e pode formar mais compostos que qualquer outro elemento.'
+                },
+                {
+                    atomicNumber: 11,
+                    symbol: 'Na',
+                    name: 'Sódio',
+                    atomicMass: 22.99,
+                    category: 'Metal Alcalino',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Cloreto de sódio (sal de cozinha) para temperar e conservar alimentos.',
+                        'Lâmpadas de vapor de sódio para iluminação pública.'
+                    ],
+                    curiosity: 'É um metal tão macio que pode ser cortado com uma faca e reage violentamente com a água.'
+                },
+                {
+                    atomicNumber: 29,
+                    symbol: 'Cu',
+                    name: 'Cobre',
+                    atomicMass: 63.55,
+                    category: 'Metal de Transição',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Fios e cabos elétricos devido à sua alta condutividade.',
+                        'Tubulações de água e gás por ser resistente à corrosão.'
+                    ],
+                    curiosity: 'Possui propriedades bacteriostáticas, o que significa que bactérias não conseguem crescer em sua superfície.'
+                },
+                {
+                    atomicNumber: 53,
+                    symbol: 'I',
+                    name: 'Iodo',
+                    atomicMass: 126.90,
+                    category: 'Halogênio',
+                    type: 'nao-metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Adicionado ao sal de cozinha (sal iodado) para prevenir deficiência de iodo.',
+                        'Antissépticos e desinfetantes (tintura de iodo).'
+                    ],
+                    curiosity: 'Quando aquecido, o iodo sólido sublima, transformando-se diretamente em um gás de cor violeta.'
+                },
+                {
+                    atomicNumber: 9,
+                    symbol: 'F',
+                    name: 'Flúor',
+                    atomicMass: 19.00,
+                    category: 'Halogênio',
+                    type: 'nao-metal',
+                    state: 'Gás',
+                    uses: [
+                        'Fluoretação da água e cremes dentais para prevenir cáries.',
+                        'Produção de polímeros como o Teflon (PTFE).'
+                    ],
+                    curiosity: 'É o elemento químico mais eletronegativo e reativo de toda a tabela periódica.'
+                },
+                {
+                    atomicNumber: 14,
+                    symbol: 'Si',
+                    name: 'Silício',
+                    atomicMass: 28.09,
+                    category: 'Semimetal',
+                    type: 'semimetal',
+                    state: 'Sólido',
+                    uses: [
+                        'Fabricação de semicondutores para chips de computador e celulares.',
+                        'Produção de vidro, cimento e cerâmica.'
+                    ],
+                    curiosity: 'É o segundo elemento mais abundante na crosta terrestre, depois do oxigênio.'
+                },
+                {
+                    atomicNumber: 47,
+                    symbol: 'Ag',
+                    name: 'Prata',
+                    atomicMass: 107.87,
+                    category: 'Metal de Transição',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Fabricação de joias, talheres e objetos de decoração.',
+                        'Contatos elétricos e condutores em eletrônicos de alta performance.'
+                    ],
+                    curiosity: 'Possui a maior condutividade elétrica e térmica entre todos os metais.'
+                },
+                {
+                    atomicNumber: 27,
+                    symbol: 'Co',
+                    name: 'Cobalto',
+                    atomicMass: 58.93,
+                    category: 'Metal de Transição',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Produção de superligas resistentes ao calor para turbinas de avião.',
+                        'Cátodos de baterias recarregáveis de íon-lítio.'
+                    ],
+                    curiosity: 'Sais de cobalto são usados há séculos para criar pigmentos azuis intensos em vidros e cerâmicas.'
+                },
+                {
+                    atomicNumber: 16,
+                    symbol: 'S',
+                    name: 'Enxofre',
+                    atomicMass: 32.06,
+                    category: 'Não-metal',
+                    type: 'nao-metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Produção de ácido sulfúrico, o produto químico mais fabricado no mundo.',
+                        'Vulcanização da borracha para torná-la mais resistente.'
+                    ],
+                    curiosity: 'O cheiro característico de ovos podres vem do sulfeto de hidrogênio (H₂S), um composto de enxofre.'
+                }
+            ];
+
+            // Referências aos elementos do DOM
+            const grid = document.getElementById('elements-grid');
+            const searchInput = document.getElementById('search-input');
+            const typeFilters = document.querySelectorAll('input[name="type-filter"]');
+            const sortSelect = document.getElementById('sort-select');
+            const noResultsMessage = document.getElementById('no-results');
+            
+            // Referências do Modal
+            const modal = document.getElementById('element-modal');
+            const closeButton = modal.querySelector('.close-button');
+            const printButton = modal.querySelector('.print-button');
+            let lastActiveElement; // Para restaurar o foco ao fechar o modal
+
+            /**
+             * Renderiza os cards dos elementos no grid
+             * @param {Array} elementsToRender - Array de objetos de elementos a serem exibidos
+             */
+            function renderElements(elementsToRender) {
+                grid.innerHTML = ''; // Limpa o grid antes de renderizar
+                if (elementsToRender.length === 0) {
+                    noResultsMessage.hidden = false;
+                } else {
+                    noResultsMessage.hidden = true;
+                    elementsToRender.forEach(el => {
+                        const card = document.createElement('article');
+                        card.className = 'element-card';
+                        card.innerHTML = `
+                            <div>
+                                <div class="symbol">${el.symbol}</div>
+                                <h3 class="name">${el.name}</h3>
+                                <p class="atomic-info">Nº: ${el.atomicNumber} | Massa: ${el.atomicMass}</p>
+                            </div>
+                            <button class="details-button" data-atomic-number="${el.atomicNumber}" aria-label="Ver detalhes de ${el.name}">Detalhes</button>
+                        `;
+                        grid.appendChild(card);
+                    });
+                }
+            }
+
+            /**
+             * Aplica os filtros e a ordenação e chama a função de renderização
+             */
+            function updateDisplay() {
+                let filteredElements = [...elementos];
+
+                // 1. Filtrar por busca (nome, símbolo, número atômico)
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                if (searchTerm) {
+                    filteredElements = filteredElements.filter(el =>
+                        el.name.toLowerCase().includes(searchTerm) ||
+                        el.symbol.toLowerCase().includes(searchTerm) ||
+                        String(el.atomicNumber).includes(searchTerm)
+                    );
+                }
+
+                // 2. Filtrar por tipo (metal, não-metal, etc.)
+                const selectedType = document.querySelector('input[name="type-filter"]:checked').value;
+                if (selectedType !== 'todos') {
+                    filteredElements = filteredElements.filter(el => el.type === selectedType);
+                }
+
+                // 3. Ordenar
+                const sortBy = sortSelect.value;
+                filteredElements.sort((a, b) => {
+                    if (sortBy === 'name') {
+                        return a.name.localeCompare(b.name, 'pt-BR');
+                    }
+                    return a[sortBy] - b[sortBy];
+                });
+
+                renderElements(filteredElements);
+            }
+            
+            /**
+             * Abre o modal com os detalhes de um elemento específico
+             * @param {number} atomicNumber - O número atômico do elemento a ser exibido
+             */
+            function openModal(atomicNumber) {
+                const element = elementos.find(el => el.atomicNumber === atomicNumber);
+                if (!element) return;
+
+                lastActiveElement = document.activeElement; // Salva o elemento focado
+
+                // Preenche os dados no modal
+                modal.querySelector('[data-modal="symbol"]').textContent = element.symbol;
+                modal.querySelector('[data-modal="name"]').textContent = element.name;
+                modal.querySelector('[data-modal="atomicNumber"]').textContent = element.atomicNumber;
+                modal.querySelector('[data-modal="category"]').textContent = element.category;
+                modal.querySelector('[data-modal="state"]').textContent = element.state;
+                modal.querySelector('[data-modal="atomicMass"]').textContent = element.atomicMass;
+                modal.querySelector('[data-modal="curiosity"]').textContent = element.curiosity;
+
+                const usesList = modal.querySelector('[data-modal="uses"]');
+                usesList.innerHTML = '';
+                element.uses.forEach(use => {
+                    const li = document.createElement('li');
+                    li.textContent = use;
+                    usesList.appendChild(li);
+                });
+
+                // Exibe o modal
+                modal.hidden = false;
+                document.body.style.overflow = 'hidden'; // Impede o scroll da página de fundo
+
+                // Foco no botão de fechar para acessibilidade
+                closeButton.focus();
+            }
+
+            /**
+             * Fecha o modal e restaura o estado da página
+             */
+            function closeModal() {
+                modal.hidden = true;
+                document.body.style.overflow = ''; // Restaura o scroll
+                if (lastActiveElement) {
+                    lastActiveElement.focus(); // Devolve o foco para o botão "Detalhes" que abriu o modal
+                }
+            }
+
+            // --- Event Listeners ---
+
+            // Atualiza a exibição em tempo real ao digitar na busca
+            searchInput.addEventListener('input', updateDisplay);
+
+            // Atualiza ao mudar o filtro de tipo
+            typeFilters.forEach(filter => filter.addEventListener('change', updateDisplay));
+
+            // Atualiza ao mudar a ordenação
+            sortSelect.addEventListener('change', updateDisplay);
+
+            // Listener para abrir o modal usando delegação de eventos
+            grid.addEventListener('click', (e) => {
+                if (e.target.matches('.details-button')) {
+                    const atomicNumber = parseInt(e.target.dataset.atomicNumber, 10);
+                    openModal(atomicNumber);
+                }
+            });
+
+            // Listeners para fechar o modal
+            closeButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                // Fecha se clicar no overlay (fundo)
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Listener para fechar com a tecla 'Escape'
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.hidden) {
+                    closeModal();
+                }
+            });
+            
+            // Trava o foco dentro do modal (Focus Trap) para acessibilidade
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'Tab' || modal.hidden) return;
+
+                const focusableElements = modal.querySelectorAll('button'); // Apenas botões por simplicidade
+                if (focusableElements.length === 0) return;
+
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            });
+            
+            // Listener para o botão de imprimir
+            printButton.addEventListener('click', () => {
+                window.print();
+            });
+
+            // Renderização inicial
+            updateDisplay();
+        });
+    </script>
+
+</body>
+</html>
