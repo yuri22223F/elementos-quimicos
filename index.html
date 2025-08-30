@@ -768,7 +768,7 @@
         </section>
 
         <section id="elements-grid" aria-live="polite" aria-atomic="true">
-            </section>
+        </section>
         <p id="no-results" class="no-results" hidden>Nenhum elemento encontrado. Tente ajustar os filtros ou a busca.</p>
 
     </main>
@@ -823,8 +823,33 @@
 
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Dados dos 10 elementos solicitados
+            // Dados dos elementos solicitados
             const elementos = [
+                {
+                    atomicNumber: 3,
+                    symbol: 'Li',
+                    name: 'Lítio',
+                    atomicMass: 6.94,
+                    category: 'Metal Alcalino',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: ['Baterias recarregáveis (íon-lítio)', 'Medicamentos para estabilização de humor'],
+                    curiosity: 'É o metal mais leve e menos denso de todos os elementos sólidos.'
+                },
+                {
+                    atomicNumber: 11,
+                    symbol: 'Na',
+                    name: 'Sódio',
+                    atomicMass: 22.99,
+                    category: 'Metal Alcalino',
+                    type: 'metal',
+                    state: 'Sólido',
+                    uses: [
+                        'Cloreto de sódio (sal de cozinha) para temperar e conservar alimentos.',
+                        'Lâmpadas de vapor de sódio para iluminação pública.'
+                    ],
+                    curiosity: 'É um metal tão macio que pode ser cortado com uma faca e reage violentamente com a água.'
+                },
                 {
                     atomicNumber: 22,
                     symbol: 'Ti',
@@ -852,20 +877,6 @@
                         'Diamante em joias e ferramentas de corte industrial.'
                     ],
                     curiosity: 'É a base de toda a vida orgânica na Terra e pode formar mais compostos que qualquer outro elemento.'
-                },
-                {
-                    atomicNumber: 11,
-                    symbol: 'Na',
-                    name: 'Sódio',
-                    atomicMass: 22.99,
-                    category: 'Metal Alcalino',
-                    type: 'metal',
-                    state: 'Sólido',
-                    uses: [
-                        'Cloreto de sódio (sal de cozinha) para temperar e conservar alimentos.',
-                        'Lâmpadas de vapor de sódio para iluminação pública.'
-                    ],
-                    curiosity: 'É um metal tão macio que pode ser cortado com uma faca e reage violentamente com a água.'
                 },
                 {
                     atomicNumber: 29,
@@ -973,84 +984,50 @@
             const typeFilters = document.querySelectorAll('input[name="type-filter"]');
             const sortSelect = document.getElementById('sort-select');
             const noResultsMessage = document.getElementById('no-results');
-            
-            // Referências do Modal
             const modal = document.getElementById('element-modal');
             const closeButton = modal.querySelector('.close-button');
             const printButton = modal.querySelector('.print-button');
-            let lastActiveElement; // Para restaurar o foco ao fechar o modal
+            let lastActiveElement;
 
-            /**
-             * Renderiza os cards dos elementos no grid
-             * @param {Array} elementsToRender - Array de objetos de elementos a serem exibidos
-             */
             function renderElements(elementsToRender) {
-                grid.innerHTML = ''; // Limpa o grid antes de renderizar
-                if (elementsToRender.length === 0) {
-                    noResultsMessage.hidden = false;
-                } else {
-                    noResultsMessage.hidden = true;
-                    elementsToRender.forEach(el => {
-                        const card = document.createElement('article');
-                        card.className = 'element-card';
-                        card.innerHTML = `
-                            <div>
-                                <div class="symbol">${el.symbol}</div>
-                                <h3 class="name">${el.name}</h3>
-                                <p class="atomic-info">Nº: ${el.atomicNumber} | Massa: ${el.atomicMass}</p>
-                            </div>
-                            <button class="details-button" data-atomic-number="${el.atomicNumber}" aria-label="Ver detalhes de ${el.name}">Detalhes</button>
-                        `;
-                        grid.appendChild(card);
-                    });
-                }
+                grid.innerHTML = '';
+                noResultsMessage.hidden = elementsToRender.length > 0;
+                elementsToRender.forEach(el => {
+                    const card = document.createElement('article');
+                    card.className = 'element-card';
+                    card.innerHTML = `<div><div class="symbol">${el.symbol}</div><h3 class="name">${el.name}</h3><p class="atomic-info">Nº: ${el.atomicNumber} | Massa: ${el.atomicMass}</p></div><button class="details-button" data-atomic-number="${el.atomicNumber}">Detalhes</button>`;
+                    grid.appendChild(card);
+                });
             }
 
-            /**
-             * Aplica os filtros e a ordenação e chama a função de renderização
-             */
             function updateDisplay() {
-                let filteredElements = [...elementos];
-
-                // 1. Filtrar por busca (nome, símbolo, número atômico)
+                let filtered = [...elementos];
                 const searchTerm = searchInput.value.toLowerCase().trim();
                 if (searchTerm) {
-                    filteredElements = filteredElements.filter(el =>
+                    filtered = filtered.filter(el =>
                         el.name.toLowerCase().includes(searchTerm) ||
                         el.symbol.toLowerCase().includes(searchTerm) ||
                         String(el.atomicNumber).includes(searchTerm)
                     );
                 }
-
-                // 2. Filtrar por tipo (metal, não-metal, etc.)
                 const selectedType = document.querySelector('input[name="type-filter"]:checked').value;
                 if (selectedType !== 'todos') {
-                    filteredElements = filteredElements.filter(el => el.type === selectedType);
+                    filtered = filtered.filter(el => el.type === selectedType);
                 }
-
-                // 3. Ordenar
                 const sortBy = sortSelect.value;
-                filteredElements.sort((a, b) => {
+                filtered.sort((a, b) => {
                     if (sortBy === 'name') {
                         return a.name.localeCompare(b.name, 'pt-BR');
                     }
                     return a[sortBy] - b[sortBy];
                 });
-
-                renderElements(filteredElements);
+                renderElements(filtered);
             }
-            
-            /**
-             * Abre o modal com os detalhes de um elemento específico
-             * @param {number} atomicNumber - O número atômico do elemento a ser exibido
-             */
+
             function openModal(atomicNumber) {
                 const element = elementos.find(el => el.atomicNumber === atomicNumber);
                 if (!element) return;
-
-                lastActiveElement = document.activeElement; // Salva o elemento focado
-
-                // Preenche os dados no modal
+                lastActiveElement = document.activeElement;
                 modal.querySelector('[data-modal="symbol"]').textContent = element.symbol;
                 modal.querySelector('[data-modal="name"]').textContent = element.name;
                 modal.querySelector('[data-modal="atomicNumber"]').textContent = element.atomicNumber;
@@ -1058,7 +1035,6 @@
                 modal.querySelector('[data-modal="state"]').textContent = element.state;
                 modal.querySelector('[data-modal="atomicMass"]').textContent = element.atomicMass;
                 modal.querySelector('[data-modal="curiosity"]').textContent = element.curiosity;
-
                 const usesList = modal.querySelector('[data-modal="uses"]');
                 usesList.innerHTML = '';
                 element.uses.forEach(use => {
@@ -1066,85 +1042,37 @@
                     li.textContent = use;
                     usesList.appendChild(li);
                 });
-
-                // Exibe o modal
                 modal.hidden = false;
-                document.body.style.overflow = 'hidden'; // Impede o scroll da página de fundo
-
-                // Foco no botão de fechar para acessibilidade
+                document.body.style.overflow = 'hidden';
                 closeButton.focus();
             }
 
-            /**
-             * Fecha o modal e restaura o estado da página
-             */
             function closeModal() {
                 modal.hidden = true;
-                document.body.style.overflow = ''; // Restaura o scroll
-                if (lastActiveElement) {
-                    lastActiveElement.focus(); // Devolve o foco para o botão "Detalhes" que abriu o modal
-                }
+                document.body.style.overflow = '';
+                if (lastActiveElement) lastActiveElement.focus();
             }
 
-            // --- Event Listeners ---
-
-            // Atualiza a exibição em tempo real ao digitar na busca
+            // Listeners
             searchInput.addEventListener('input', updateDisplay);
-
-            // Atualiza ao mudar o filtro de tipo
             typeFilters.forEach(filter => filter.addEventListener('change', updateDisplay));
-
-            // Atualiza ao mudar a ordenação
             sortSelect.addEventListener('change', updateDisplay);
-
-            // Listener para abrir o modal usando delegação de eventos
             grid.addEventListener('click', (e) => {
                 if (e.target.matches('.details-button')) {
-                    const atomicNumber = parseInt(e.target.dataset.atomicNumber, 10);
-                    openModal(atomicNumber);
+                    openModal(parseInt(e.target.dataset.atomicNumber, 10));
                 }
             });
-
-            // Listeners para fechar o modal
             closeButton.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => {
-                // Fecha se clicar no overlay (fundo)
                 if (e.target === modal) {
                     closeModal();
                 }
             });
-            
-            // Listener para fechar com a tecla 'Escape'
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !modal.hidden) {
                     closeModal();
                 }
             });
-            
-            // Trava o foco dentro do modal (Focus Trap) para acessibilidade
-            document.addEventListener('keydown', (e) => {
-                if (e.key !== 'Tab' || modal.hidden) return;
-
-                const focusableElements = modal.querySelectorAll('button'); // Apenas botões por simplicidade
-                if (focusableElements.length === 0) return;
-
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
-
-                if (e.shiftKey) { // Shift + Tab
-                    if (document.activeElement === firstElement) {
-                        lastElement.focus();
-                        e.preventDefault();
-                    }
-                } else { // Tab
-                    if (document.activeElement === lastElement) {
-                        firstElement.focus();
-                        e.preventDefault();
-                    }
-                }
-            });
-            
-            // Listener para o botão de imprimir
             printButton.addEventListener('click', () => {
                 window.print();
             });
@@ -1153,6 +1081,5 @@
             updateDisplay();
         });
     </script>
-
 </body>
 </html>
